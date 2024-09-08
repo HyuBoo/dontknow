@@ -15,16 +15,14 @@
         }
     </style>
     <script>
-        // 서버에서 카운트 값을 가져오는 함수
         async function fetchCount() {
-            const response = await fetch('/count');
+            const response = await fetch('/count/backgate');  // 'backgate' 식당 카운트 요청
             const data = await response.json();
             document.getElementById('result').innerText = data.count;
         }
 
-        // 서버에 카운트 값을 업데이트하는 함수
         async function handleButtonClick(action) {
-            const response = await fetch('/count', {
+            const response = await fetch('/count/backgate', {  // 'backgate' 식당 카운트 업데이트
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -35,7 +33,6 @@
             document.getElementById('result').innerText = data.count;
         }
 
-        // 페이지 로드 시 초기 카운트 값을 가져옵니다.
         window.onload = fetchCount;
     </script>
 </head>

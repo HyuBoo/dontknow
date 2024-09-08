@@ -16,13 +16,13 @@
     </style>
     <script>
         async function fetchCount() {
-            const response = await fetch('/count');
+            const response = await fetch('/count/cupbop');  // 'cupbop' 식당 카운트 요청
             const data = await response.json();
             document.getElementById('result').innerText = data.count;
         }
 
         async function handleButtonClick(action) {
-            const response = await fetch('/count', {
+            const response = await fetch('/count/cupbop', {  // 'cupbop' 식당 카운트 업데이트
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
