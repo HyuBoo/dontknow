@@ -1,46 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>윤식당 카운터</title>
+    <title>윤식당 좌석 관리</title>
     <style>
-        button {
-            font-size: 20px;
+        .seat {
+            width: 100px;
+            height: 50px;
+            background-color: white;
+            border: 1px solid black;
+            display: inline-block;
             margin: 5px;
+            cursor: pointer;
         }
-        #result {
-            font-size: 30px;
-            margin-top: 10px;
+        #seat-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 가로 2줄 */
+            grid-gap: 10px;
+        }
+        #counter {
+            margin-top: 20px;
+            font-size: 24px;
         }
     </style>
     <script>
-        async function fetchCount() {
-            const response = await fetch('/count/yoon');  // 'yoon' 식당 카운트 요청
-            const data = await response.json();
-            document.getElementById('result').innerText = data.count;
-        }
+        let occupiedSeats = 0; // 현재 앉아있는 사람 수 (빨간색 좌석 수)
 
-        async function handleButtonClick(action) {
-            const response = await fetch('/count/yoon', {  // 'yoon' 식당 카운트 업데이트
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ action }),
-            });
-            const data = await response.json();
-            document.getElementById('result').innerText = data.count;
+        function toggleSeat(seat) {
+            if (seat.style.backgroundColor === "red") {
+                seat.style.backgroundColor = "white";
+                occupiedSeats--;
+            } else {
+                seat.style.backgroundColor = "red";
+                occupiedSeats++;
+            }
+            document.getElementById('counter').innerText = `현재 앉아있는 사람 수: ${occupiedSeats}`;
         }
-
-        window.onload = fetchCount;
     </script>
 </head>
 <body>
-    <h1>윤식당 카운터</h1>
-    제육 맛집
-    <input type="button" onclick="handleButtonClick('plus')" value="+" />
-    <input type="button" onclick="handleButtonClick('minus')" value="-" />
-    <div id="result">0</div>
+    <h1>윤식당 좌석 관리</h1>
+    <div id="seat-container">
+        <!-- 8개의 좌석 버튼 -->
+        <div class="seat" onclick="toggleSeat(this)"></div>
+        <div class="seat" onclick="toggleSeat(this)"></div>
+        <div class="seat" onclick="toggleSeat(this)"></div>
+        <div class="seat" onclick="toggleSeat(this)"></div>
+        <div class="seat" onclick="toggleSeat(this)"></div>
+        <div class="seat" onclick="toggleSeat(this)"></div>
+        <div class="seat" onclick="toggleSeat(this)"></div>
+        <div class="seat" onclick="toggleSeat(this)"></div>
+    </div>
+
+    <!-- 현재 앉아있는 사람 수 표시 -->
+    <div id="counter">현재 앉아있는 사람 수: 0</div>
 </body>
 </html>
